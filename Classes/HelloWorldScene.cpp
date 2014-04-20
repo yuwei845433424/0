@@ -158,9 +158,9 @@ bool isTouchGetNode(CCSprite *sprite,CCTouch* touch)
 	if(rc1.containsPoint(touchPoint)) return true;
 	else return false;
 }
+
 void HelloWorld::ccTouchesEnded(CCSet *pTouches,CCEvent *pEvent)
 {
-	
 	//获取鼠标位置
 	CCTouch *touch = (CCTouch*)pTouches->anyObject();
 	CCPoint locInView= touch->getLocationInView();
@@ -172,11 +172,8 @@ void HelloWorld::ccTouchesEnded(CCSet *pTouches,CCEvent *pEvent)
 	for(vector<keyedit*>::iterator it=this->m_pSpriteList.begin();it!=m_pSpriteList.end();it++){
 		if(isTouchGetNode(*it,touch)){
 			(*it)->endTime = getCurrentTime();
-		
-			(*it)->removeFromParentAndCleanup(true);
-			delete *it;
-			this->m_pSpriteList.erase(it);
-
+			(*it)->Change();
+			(*it)->isClick = true;
 			currentScore+=5;
 			CCLOG("currentScore:%d",currentScore);
 			break;
@@ -199,14 +196,17 @@ void HelloWorld::update(float dt)
 	LabelScore->setVisible(true);
 	long currentTime = getCurrentTime();
 	for(vector<keyedit*>::iterator it=this->m_pSpriteList.begin();it!=m_pSpriteList.end();it++){
-		if(currentTime-(*it)->createTime>1000)
+		if(currentTime - (*it)->createTime>1000)
 		{
+			if(!(*it)->isClick)
+			{
+				currentScore -= 10;
+			}
 			(*it)->endTime = getCurrentTime();
 			(*it)->removeFromParentAndCleanup(true);
 			delete *it;
 			this->m_pSpriteList.erase(it);
-
-			currentScore -= 10;
+				
 			CCLOG("currentScore:%d",currentScore);
 			break;
 		}

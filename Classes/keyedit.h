@@ -7,11 +7,13 @@ public:
 	keyedit(void);
 	~keyedit(void);
 	keyedit(long time);
+	bool isClick;
 	long createTime;
 	long endTime;
 	int positionX;
 	int positionY;
 	void keyRunAnimation();
+	void Change();
 };
 
 

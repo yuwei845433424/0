@@ -15,6 +15,7 @@ keyedit::~keyedit(void)
 
 keyedit::keyedit(long time)
 {
+	isClick = false;
 	CCSize screenSize=CCDirector::sharedDirector()->getVisibleSize();
 	createTime = time;
 	positionX = rand()%(int)(screenSize.width);
@@ -29,18 +30,14 @@ void keyedit::keyRunAnimation()
 	this->runAction(rotation);
 
 }
-/*void node::NodeChange(int color)
+//换图片
+void keyedit::Change()
 {	
-	this->color=color;
 	CCAnimation* animation = CCAnimation::create();
-	if(this->color==2)
-		animation->addSpriteFrameWithFileName("node2.png");
-	else if(this->color==0)
-		animation->addSpriteFrameWithFileName("node0.png");
-
+	animation->addSpriteFrameWithFileName("key2.png");
 	animation->setDelayPerUnit(2.8f / 14.0f);//必须设置否则不会动态播放
 	animation->setRestoreOriginalFrame(false);//是否回到第一帧
 	animation->setLoops(1);//重复次数 （-1:无限循环）
 	CCFiniteTimeAction * animate = CCAnimate::create(animation);
 	this->runAction(animate);
-}*/
+}
