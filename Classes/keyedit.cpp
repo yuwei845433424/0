@@ -1,5 +1,3 @@
-
-
 #pragma once
 #include "keyedit.h"
 #include "cocos2d.h"
