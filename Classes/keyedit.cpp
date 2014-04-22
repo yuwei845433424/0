@@ -1,7 +1,8 @@
 #pragma once
 #include "keyedit.h"
 #include "cocos2d.h"
-
+#include "HelloWorldScene.h"
+#include "line.h"
 USING_NS_CC;
 
 keyedit::keyedit(void)
@@ -13,22 +14,35 @@ keyedit::~keyedit(void)
 {
 }
 
-keyedit::keyedit(long time)
+keyedit::keyedit(long time,int positionX,int positionY,bool isSpecialKey)
 {
+	this->isSpecialKey = isSpecialKey;
 	isClick = false;
 	CCSize screenSize=CCDirector::sharedDirector()->getVisibleSize();
 	createTime = time;
-	positionX = rand()%(int)(screenSize.width);
-	positionY = rand()%(int)(screenSize.height);
-	this->setPosition(ccp(positionX,positionY));
+	this->PositionX = positionX;
+	this->PositionY = positionY;
+	this->setPosition(ccp(PositionX,PositionX));
 	this->initWithFile("key.png");
+
+	keyAmount++;
 }
 
-void keyedit::keyRunAnimation()
+void keyedit::keyRunAnimation(CCPoint moveTo)
 {
 	CCActionInterval *rotation = CCRotateTo::create(1,180);
-	this->runAction(rotation);
-
+	if(this->isSpecialKey)
+	{
+		CCActionInterval *movoTo = CCMoveTo::create(1,moveTo);
+		CCFiniteTimeAction *se=CCSpawn::create(rotation,movoTo,NULL);
+		se->retain(); 
+		this->runAction(se);
+		this->specialAmount++;
+	}
+	else
+	{
+		this->runAction(rotation);
+	}
 }
 //»»Í¼Æ¬
 void keyedit::Change()

@@ -1,6 +1,6 @@
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
-
+#include "SmartRes.h"
 USING_NS_CC;
 
 AppDelegate::AppDelegate() {
@@ -16,8 +16,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
 
-    pDirector->setOpenGLView(pEGLView);
-	
+	TargetPlatform target = getTargetPlatform();
+	pDirector->setOpenGLView(pEGLView);
+    SmartRes::sharedRes()->setVirtualScreen(480,320);
+
+    
+	//TODO:fjdhfklgkljrelkhg
     // turn on display FPS
     pDirector->setDisplayStats(true);
 
